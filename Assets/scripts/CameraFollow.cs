@@ -2,21 +2,27 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target; // The object we want to follow (The Player)
-    public float smoothSpeed = 0.125f; // How "laggy" the camera is (0 is instant, 1 is slow)
-    public Vector3 offset; // Keeps the camera Z axis correct (-10)
+    public Transform target;
+    public float smoothSpeed = 0.125f;
+    public Vector3 offset;
 
-    void LateUpdate() // LateUpdate runs after the player has finished moving
+    // New variables for limits
+    public Vector2 minPosition; // Bottom-Left limit
+    public Vector2 maxPosition; // Top-Right limit
+
+    void LateUpdate()
     {
         if (target != null)
         {
-            // Calculate where the camera WANTS to be (Player position + offset)
             Vector3 desiredPosition = target.position + offset;
 
-            // Smoothly move from current position to desired position
+            // 1. Smooth the movement first
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
 
-            // Apply the new position
+            // 2. Clamp (Lock) the position inside the boundaries
+            smoothedPosition.x = Mathf.Clamp(smoothedPosition.x, minPosition.x, maxPosition.x);
+            smoothedPosition.y = Mathf.Clamp(smoothedPosition.y, minPosition.y, maxPosition.y);
+
             transform.position = smoothedPosition;
         }
     }

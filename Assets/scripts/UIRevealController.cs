@@ -65,7 +65,6 @@ public class UIRevealController : MonoBehaviour
 
     void Start()
     {
-        // 1. Hide the system cursor
         Cursor.visible = false;
 
         if (colorImage != null)
@@ -74,7 +73,6 @@ public class UIRevealController : MonoBehaviour
             rectTransform = colorImage.GetComponent<RectTransform>();
         }
 
-        // Start the smoother at the current mouse pos so it doesn't "jump" in from 0,0
         _smoothedPos = Input.mousePosition;
     }
 
@@ -82,8 +80,6 @@ public class UIRevealController : MonoBehaviour
     {
         if (instancedMaterial == null || rectTransform == null) return;
 
-        // 2. The Buttery Math (SmoothDamp)
-        // This takes the raw jerky mouse input and turns it into fluid movement
         _smoothedPos = Vector2.SmoothDamp(_smoothedPos, Input.mousePosition, ref _velocity, smoothTime);
 
         // 3. Move the "+" Visual
@@ -92,7 +88,6 @@ public class UIRevealController : MonoBehaviour
             customCursor.position = _smoothedPos;
         }
 
-        // 4. Calculate Local Point for Shader (Using the SMOOTHED position)
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             rectTransform,
@@ -101,7 +96,6 @@ public class UIRevealController : MonoBehaviour
             out localPoint
         );
 
-        // 5. Send to Shader
         instancedMaterial.SetVector("_MousePos", localPoint);
         instancedMaterial.SetFloat("_Radius", radius);
         instancedMaterial.SetFloat("_Softness", softness);
