@@ -42,6 +42,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _ColorMask: 15
+    - _LensPower: 0
     - _Radius: 230
     - _Softness: 40
     - _Stencil: 0
@@ -51,8 +52,9 @@ Material:
     - _StencilWriteMask: 255
     - _UIMaskSoftnessX: 1
     - _UIMaskSoftnessY: 1
+    - _ZoomAmount: 0.2
     m_Colors:
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
-    - _MousePos: {r: 0.46240234, g: -27.2901, b: 0, a: 0}
+    - _MousePos: {r: 98.26172, g: 681.17175, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
